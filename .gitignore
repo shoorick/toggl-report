@@ -1,5 +1,7 @@
 # Data
 Toggl_*
+*.csv
+*.ods
 
 # Python
 venv
