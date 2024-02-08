@@ -46,9 +46,9 @@ def main():
         sys.exit('Specify --issues input file.\nUse -h or --help to get usage help.')
 
     output = args.output
-    if output and not re.search(r'\.(csv|html?|js(on)?|xlsx?)$', output, re.I):
-        sys.exit('Output file {} has unknown type. '
-            + 'Only CSV, HTML, JSON and XSLX are available.\n'.format(output))
+    if output and not re.search(r'\.(csv|html?|js(on)?|xlsx)$', output, re.I):
+        sys.exit(f'Output file {output} has unknown type. '
+            + 'Only CSV, HTML, JSON and XSLX are available.\n')
 
     # Convert types to make comparison possible
     summary['Issue'] = pd.to_numeric(
@@ -67,7 +67,7 @@ def main():
             filtered.to_html(output, index=False)
         elif re.search(r'\.js(on)?$', output, re.I):
             filtered.to_json(output, index=False)
-        elif re.search(r'\.xlsx?$', output, re.I):
+        elif re.search(r'\.xlsx$', output, re.I):
             filtered.to_excel(output, index=False)
     else:
         filtered.to_csv(sys.stdout, index=False)
