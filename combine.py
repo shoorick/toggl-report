@@ -20,6 +20,9 @@ def parse_arguments():
     parser.add_argument('-i', '--issues',
                         help='issues list',
                         default='')
+    parser.add_argument('-f', '--filter',
+                        help='filter input file by column=value',
+                        default='')
     parser.add_argument('-o', '--output',
                         help='output to file',
                         default='')
@@ -49,6 +52,11 @@ def main():
     if output and not re.search(r'\.(csv|html?|js(on)?|xlsx)$', output, re.I):
         sys.exit(f'Output file {output} has unknown type. '
             + 'Only CSV, HTML, JSON and XSLX are available.\n')
+
+    if args.filter:
+        column, value = args.filter.split('=')
+        if column in summary and value:
+            summary = summary.loc[summary[column] == value]
 
     # Convert types to make comparison possible
     summary['Issue'] = pd.to_numeric(
