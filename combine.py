@@ -58,6 +58,11 @@ def main():
         if column in summary and value:
             summary = summary.loc[summary[column] == value]
 
+    if not 'Description' in summary:
+        sys.exit('No Description column in report file')
+    if not 'Issue' in issues:
+        sys.exit('No Issue column in issues list')
+
     # Convert types to make comparison possible
     summary['Issue'] = pd.to_numeric(
         summary['Description'].str.extract(r'#(\d+)', expand=False),
