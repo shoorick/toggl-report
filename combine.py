@@ -37,9 +37,11 @@ def main():
 
     if args.summary:
         summary = pd.read_csv(args.summary)
+        summary['Duration'] = pd.to_timedelta(summary['Duration'])
     elif args.time:
-        time = pd.read_csv(args.time)
-        # TODO prepare summary
+        entries = pd.read_csv(args.time)
+        entries['Duration'] = pd.to_timedelta(entries['Duration'])
+        summary = entries.groupby('Description')['Duration'].sum().reset_index()
     else:
         sys.exit('Specify --summary or --time input file.\nUse -h or --help to get usage help.')
 
